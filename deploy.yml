@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: streamlit-cont    # Name of the container running the Streamlit app
-        image: us-central1-docker.pkg.dev/tribal-parsec-445317-p5/streamlit-cicd/streamlit_demo:v2
+        image: us-central1-docker.pkg.dev/boxwood-tree-446505-q8/streamlit-cicd/streamlitgithub:v1
         imagePullPolicy: Always
         ports:
         - containerPort: 8080    # Streamlit default port

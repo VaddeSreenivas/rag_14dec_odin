@@ -80,3 +80,61 @@ EXPOSE 8080
 
 **Define the default command to run the Streamlit app**
 CMD ["streamlit", "run", "app2.py", "--server.port=8080", "--server.address=0.0.0.0"]
+
+
+# google cloud account
+# search for artifact registry if signed in
+# enable AR
+# create repository
+# streamlit-cicd- choose any name
+# region - US-central1
+# to communicate with AR from local we need to install google cli
+- google cloud cli install search for this on google
+# follow the steps to install if from the documentation and check the version locally
+gcloud --version
+# or just run gcloud auth login to authenticate local system cli with google cloud account
+gcloud auth login sreenivasm@gmail.com 
+
+gcloud config set project boxwood-tree-446505-q8
+
+# click on the file or artifact registry and then click on set up instructions to set up
+run the command 
+gcloud auth configure-docker \
+    us-central1-docker.pkg.dev
+
+# Push the code to AR using # project_id
+gcloud config set project boxwood-tree-446505-q8
+
+# build the image
+
+docker build -t us-central1-docker.pkg.dev/boxwood-tree-446505-q8/streamlit-cicd/streamlitgithub:v1 .
+
+# then push it 
+
+docker push us-central1-docker.pkg.dev/boxwood-tree-446505-q8/streamlit-cicd/streamlitgithub:v1
+
+# setup the google cloud cluster
+enable cluster api 
+
+create a cluster
+ - clusters-create cluster-create
+ click on 3 dots and connect 
+# copy the command of connect and run it in the terminal 
+gcloud container clusters get-credentials autopilot-cluster-1 --region us-central1 --project boxwood-tree-446505-q8
+
+# Launch IAM and select service account- three dots-manageskeys -add key-create new key-json it will download and keep the json file locally
+
+-go to github - your project -settings-secrtes and variables-actions-create a new repo key-GKE_Project (name)-
+project_id inside the box-ADD SECRET - boxwood-tree-446505-q8
+
+-Create one more key GKE_SA_KEY, this will be the json file we downloaded
+
+-github actions - create .gke.yml inside .github/workflows
+
+go to gke.yml and deploy.yml and make nececessay changes
+
+git push origin main after the changes
+-github repo-actions
+
+
+
